@@ -168,6 +168,9 @@ button {
 .summary {
     display: flex;
     flex-flow: row wrap;
+    background-color: #F8FAFB;
+    padding: 15px;
+    border-radius: 20px;
     & .summary-left {
         display: grid;
         grid-template-areas: "monthly monthly annual annual"
@@ -188,6 +191,37 @@ button {
         }
     }
     & .summary-right {
-
+        display: flex;
+        align-self: flex-end;
     }
+}
+
+#spending-needs, #spending-wants, #spending-savings, #spending-misc {
+    color: #FF5A5A;
+}
+
+#spending-remaining {
+    color: #6BFFAE;
+    text-decoration: none;
+}
+
+#span-wants, #span-needs, #span-savings, #span-misc, #span-remainging, #span-monthly, #span-annual {
+    text-decoration: underline;
+}
+
+#rule-needs, #rule-wants, #rule-savings {
+    text-decoration: none;
+    color: #FF5A5A;
+}
+
+#span2-wants, #span2-needs, #span2-savings {
+    text-decoration: underline;
+}
+
+.label {
+    text-decoration: underline;
+}
+
+#summmary-gross-monthly-income, #summary-gross-annual-income {
+    font-weight: bold;
 }
