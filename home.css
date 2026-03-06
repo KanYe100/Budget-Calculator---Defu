@@ -19,23 +19,49 @@ nav {
     background-color: #B0FFD3;
     display: flex;
     justify-content: flex-start;
-    padding: 10px;
-    margin-bottom: 3%;
+    padding: 20px;
+    margin-bottom: 30px;;
 }
 
 nav h1 {
     color: #36454F;
 }
 
-.Left-side {
-    display: flex;
-    flex-direction: column;
+.left-side {
+    display: grid;
+    grid-template-areas: "income income"
+                         "needs wants"
+                         "savings misc";
+    gap: 20px;
     background-color: #F8FAFB;
     border-radius: 20px;
     padding: 20px;
+    & .income {
+        grid-area: income;
+        display: flex;
+        flex-direction: row;
+        background-color: #B0FFD3;
+        padding: 10px;
+        border-radius: 10px;
+        & h2 {
+            color: #36454F;
+        }
+    }
+    & .needs {
+        grid-area: needs;
+    }
+    & .wants {
+        grid-area: wants;
+    }
+    & .savings {
+        grid-area: savings;
+    }
+    & .misc {
+        grid-area: misc;
+    }
 }
 
-.Right-side {
+.right-side {
     display: flex;
     flex-direction: column;
 }
@@ -47,34 +73,23 @@ nav h1 {
     gap: 30px;
 }
 
-.Income {
+.income-details {
     display: flex;
     flex-direction: row;
-    background-color: #B0FFD3;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.Income h2 {
-    color: #36454F;
-}
-
-.Income-Details {
-    display: flex;
-    flex-direction: row;
+    gap: 5px;
     margin-left: 20px;
 }
 
-.Income-Details input, select {
+.income-details input, select {
     border-radius: 10px;
     display: flex;
 }
 
-.Income-Details select {
+.income-details select {
     margin-left: 10px;
 }
 
-.Income-Details input {
+.income-details input {
     margin-left: 3px;
     padding: 5px;
     width: 150px;
@@ -83,14 +98,14 @@ nav h1 {
     align-self: center;
 }
 
-.Income-Details p {
+.income-details p {
     display: flex;
     align-items: center;
-    font-size: 18px;
+    font-size: 20px;
     color: #36454F;
 }
 
-.Needs-var, .Wants-var, .Savings-var {
+.needs-var, .wants-var, .savings-var {
     display:flex;
     flex-direction: row;
     align-items: center;
@@ -101,11 +116,11 @@ nav h1 {
     padding: 10px;
 }
 
-.Needs-var img {
+[src="images/minus.png"] {
     height: 5px;
 }
 
-.Needs-inputs, .Wants-inputs, .savings-inputs {
+.needs-inputs, .wants-inputs, .savings-inputs {
     display: flex;
     flex-direction: column;
     background-color: #d4fce8;
@@ -114,11 +129,11 @@ nav h1 {
 
 }
 
-.Needs-inputs p, .Wants-inputs p, .savings-inputs p {
+.needs-inputs p, .wants-inputs p, .savings-inputs p {
     display: inline-flex;
 }
 
-.Needs-inputs input, .Wants-inputs input, .savings-inputs input {
+.needs-inputs input, .wants-inputs input, .savings-inputs input {
     max-width: 120px;
     min-width: 120px;
 }
@@ -135,7 +150,8 @@ button {
     justify-content: flex-end;
     background-color: #d4fce8;
     align-items:center;
-
+    gap: 5px;
+    padding: 10px;
 }
 
 .retirement, .college-savings, .emergency-fund, .housing, .utilities, .food, .healthcare, .loans {
@@ -147,4 +163,31 @@ button {
 
 .third-line {
     padding-right: 100px;
+}
+
+.summary {
+    display: flex;
+    flex-flow: row wrap;
+    & .summary-left {
+        display: grid;
+        grid-template-areas: "monthly monthly annual annual"
+                             "needs wants savings misc"
+                             "remaining . . .";
+        gap: 15px;
+        & .label-month {
+            grid-area: monthly;
+        }
+        & .label-annual {
+            grid-area: annual;
+        }
+        & .label-needs {
+            grid-area: needs;
+        }
+        & .label-wants {
+            grid-area: wants;
+        }
+    }
+    & .summary-right {
+
+    }
 }
