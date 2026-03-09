@@ -49,15 +49,19 @@ nav h1 {
     }
     & .needs {
         grid-area: needs;
+        width: 318px;
     }
     & .wants {
         grid-area: wants;
+        width: 318px;
     }
     & .savings {
         grid-area: savings;
+        width: 318px;
     }
     & .misc {
         grid-area: misc;
+        width: 318px;
     }
 }
 
@@ -125,8 +129,7 @@ nav h1 {
     flex-direction: column;
     background-color: #d4fce8;
     padding: 10px;
-    gap:10px;
-
+    gap: 10px;
 }
 
 .needs-inputs p, .wants-inputs p, .savings-inputs p {
@@ -134,8 +137,11 @@ nav h1 {
 }
 
 .needs-inputs input, .wants-inputs input, .savings-inputs input {
-    max-width: 120px;
-    min-width: 120px;
+    width: 119px;
+    height: 29px;
+    border-radius: 15px;
+    border: solid 1px rgba(98, 96, 96, 0.47);
+    margin-right: 30px;
 }
 
 button {
@@ -224,4 +230,11 @@ button {
 
 #summmary-gross-monthly-income, #summary-gross-annual-income {
     font-weight: bold;
+}
+
+.housing, .utilities, .food, .healthcare, .loans, .entertainment, .hobbies, .clothing, .eating-out, .travel, .retirement, .college-savings, .emergency-fund {
+    font-size: 14px;
+    font-weight: 600;
+    width: 318px;
+    height: 39px;
 }
