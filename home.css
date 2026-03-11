@@ -150,11 +150,23 @@ nav h1 {
     }
 }
 
-.needs-inputs input, .wants-inputs input, .savings-inputs input {
+.custom-expense-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 328px;
+}
+
+.custom-expense-section .input-fields {
+    margin-right: -10px;
+}
+
+.needs-inputs input, .wants-inputs input, .savings-inputs input, .custom-expense-section #custom-amount {
     width: 119px;
     height: 29px;
     border-radius: 15px;
     border: solid 1px rgba(98, 96, 96, 0.47);
+    margin-right: 20px;
 }
 
 .entertainment, .hobbies, .clothing, .eating-out, .travel {

@@ -128,11 +128,15 @@ const allValues = [
     ...customAmountsValues
 ];
 
+const expenseName = document.getElementById('custom-amount')
+
 // Create a new Chart.js instance
 window.budgetChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Income', 'Housing', 'Utilities', 'Food', 'Healthcare', 'Loans', 'Entertainment', 'Hobbies',
+                'Clothing', 'Eating Out', 'Travel', '401k', 'College', 'Emergecy Fund', expenseName
+                ],
         datasets: [{
             data: [
                 incomeAmount.value,
@@ -172,13 +176,13 @@ function changeInputToP() {
 addExpenseNeeds.addEventListener('click', () => {
     const newInput = document.createElement('article');
     newInput.innerHTML =
-        `<article class="housing">
-    <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
-    <article class="input-fields">
-        <label for="housing-amount">$</label>
-        <input type="number" id="custom-amount" class="custom-amount custom-needs" value="0" onchange="calculateBudget()">
-    </article>
-</article>`;
+    `<article class="custom-expense-section">
+           <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
+        <article class="input-fields">
+            <label for="housing-amount">$</label>
+            <input type="number" id="custom-amount" class="custom-amount custom-wants" value="0" onchange="calculateBudget()">
+        </article>
+    </article>`;
 
     const parent = document.getElementById('needs-inputs');
     const lastChild = parent.lastElementChild;
@@ -193,13 +197,13 @@ addExpenseNeeds.addEventListener('click', () => {
 addExpenseWants.addEventListener('click', () => {
     const newInput = document.createElement('article');
     newInput.innerHTML =
-        `<article class="housing">
-    <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
-    <article class="input-fields">
-        <label for="housing-amount">$</label>
-        <input type="number" id="custom-amount" class="custom-amount custom-wants" value="0" onchange="calculateBudget()">
-    </article>
-</article>`;
+    `<article class="custom-expense-section">
+           <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
+        <article class="input-fields">
+            <label for="housing-amount">$</label>
+            <input type="number" id="custom-amount" class="custom-amount custom-wants" value="0" onchange="calculateBudget()">
+        </article>
+    </article>`;
 
     const parent = document.getElementById('wants-inputs');
     const lastChild = parent.lastElementChild;
@@ -216,13 +220,13 @@ addExpenseWants.addEventListener('click', () => {
 addExpenseSavings.addEventListener('click', () => {
     const newInput = document.createElement('article');
     newInput.innerHTML =
-        `<article class="housing">
-    <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
-    <article class="input-fields">
-        <label for="housing-amount">$</label>
-        <input type="number" id="custom-amount" class="custom-amount custom-savings" value="0" onchange="calculateBudget()">
-    </article>
-</article>`;
+    `<article class="custom-expense-section">
+           <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
+        <article class="input-fields">
+            <label for="housing-amount">$</label>
+            <input type="number" id="custom-amount" class="custom-amount custom-wants" value="0" onchange="calculateBudget()">
+        </article>
+    </article>`;
 
     const parent = document.getElementById('savings-inputs');
     const lastChild = parent.lastElementChild;
@@ -239,13 +243,13 @@ addExpenseSavings.addEventListener('click', () => {
 addExpenseMisc.addEventListener('click', () => {
     const newInput = document.createElement('article');
     newInput.innerHTML =
-        `<article class="housing">
-    <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
-    <article class="input-fields">
-        <label for="housing-amount">$</label>
-        <input type="number" id="custom-amount" class="custom-amount custom-misc" value="0" onchange="calculateBudget()">
-    </article>
-</article>`;
+    `<article class="custom-expense-section">
+           <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
+        <article class="input-fields">
+            <label for="housing-amount">$</label>
+            <input type="number" id="custom-amount" class="custom-amount custom-wants" value="0" onchange="calculateBudget()">
+        </article>
+    </article>`;
 
     const parent = document.getElementById('misc-inputs');
     const lastChild = parent.lastElementChild;
