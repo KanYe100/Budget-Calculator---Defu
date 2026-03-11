@@ -193,7 +193,6 @@ button {
 .graph {
     width: 510px;
     height: 510px;
-    background-image: url(/Images/piechart.png);
 }
 
 .summary {
