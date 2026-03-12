@@ -265,11 +265,13 @@ button {
 }
 
 #spending-needs, #spending-wants, #spending-savings, #spending-misc {
+    margin-top: -10px;
     color: #FF5A5A;
     font-weight: bold;
 }
 
 #spending-remaining {
+    margin-top: -10px;
     color: #6BFFAE;
     text-decoration: none;
     font-weight: bold;
@@ -282,7 +284,6 @@ button {
 }
 
 #rule-needs, #rule-wants, #rule-savings {
-    text-decoration: none;
     color: #FF5A5A;
     font-weight: bold;
 }
@@ -299,6 +300,7 @@ button {
 }
 
 #summmary-gross-monthly-income, #summary-gross-annual-income {
+    margin-top: -10px;
     font-weight: bold;
 }
 

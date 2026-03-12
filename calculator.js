@@ -27,12 +27,12 @@ const addExpenseWants = document.getElementById('expenseButtonWants');
 const addExpenseSavings = document.getElementById('expenseButtonSavings');
 const addExpenseMisc = document.getElementById('expenseButtonMisc');
 
-
 // initalize gross income variable
 let grossIncome = 0;
 
 // Function to calculate federal tax based on taxable income
-function calculateFederalTax(taxableIncome) {
+function calculateFederalTax() { // FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX
+    let taxableIncome = incomeAmount;
     let tax = 0;
 
     if (taxableIncome <= 12400) {
@@ -50,6 +50,30 @@ function calculateFederalTax(taxableIncome) {
 
     return tax;
 }
+
+async function getData() { // FIX FIX FIX
+    const url = "https://eecu-data-server.vercel.app/data";
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+
+          throw new Error(`Response status: ${response.status}`);
+        }
+    
+        const result = await response.json();
+        console.log(result);
+
+
+
+      } catch (error) {
+        console.error(error.message);
+      }
+    
+}
+
+// LOCAL STORAGE LOCAL STORAGE LOCAL STORAGE
 
 // Function to calculate the budget based on user input (ran every time an input changes)
 function calculateBudget() {
@@ -70,9 +94,11 @@ function calculateBudget() {
     let wantsTotal = Number(wantsEntertainment.value) + Number(wantsHobbies.value) + Number(wantsClothing.value) + Number(wantsEatingOut.value) + Number(wantsTravel.value);
     let savingsTotal = Number(retirementAmount.value) + Number(collegeAmount.value) + Number(emergencyAmount.value);
 
+    let ruleNeeds = Number(incomeAmount.value / 2);
+    let ruleWants = Number(incomeAmount.value / 3);
+    let ruleSavings = Number(incomeAmount.value / 5);
 
     let total = incomeAmount.value - needsTotal - wantsTotal - savingsTotal;
-
 
     const customAmounts = document.querySelectorAll('.custom-amount');
     customAmounts.forEach(input => {
@@ -90,7 +116,7 @@ function calculateBudget() {
     });
 
     if (total < 0) {
-        document.getElementById('spending-remaining').textContent = `-$${Math.abs(total).toFixed(2)}`;
+        document.getElementById('spending-remaining').textContent = `-$${Math.abs(total).toFixed()}`;
         document.getElementById('spending-remaining').style.color = '#FF5A5A';
     } else {
         document.getElementById('spending-remaining').textContent = `$${total.toFixed(2)}`;
@@ -101,6 +127,10 @@ function calculateBudget() {
     document.getElementById('spending-needs').textContent = `-$${needsTotal.toFixed(2)}`;
     document.getElementById('spending-wants').textContent = `-$${wantsTotal.toFixed(2)}`;
     document.getElementById('spending-savings').textContent = `-$${savingsTotal.toFixed(2)}`;
+
+    document.getElementById('rule-needs').textContent = `$${ruleNeeds.toFixed(2)}`;
+    document.getElementById('rule-wants').textContent = `$${ruleWants.toFixed(2)}`;
+    document.getElementById('rule-savings').textContent = `$${ruleSavings.toFixed(2)}`;
 
     //Render the chart
     const ctx = document.getElementById('budgetChart');
@@ -128,18 +158,16 @@ const allValues = [
     ...customAmountsValues
 ];
 
-const expenseName = document.getElementById('custom-amount')
+const expenseName = document.getElementById('custom-amount');
 
 // Create a new Chart.js instance
 window.budgetChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Income', 'Housing', 'Utilities', 'Food', 'Healthcare', 'Loans', 'Entertainment', 'Hobbies',
-                'Clothing', 'Eating Out', 'Travel', '401k', 'College', 'Emergecy Fund', expenseName
-                ],
+        labels: ['Housing', 'Utilities', 'Food', 'Healthcare', 'Loans', 'Entertainment', 'Hobbies',
+                'Clothing', 'Eating Out', 'Travel', '401k', 'College', 'Emergecy Fund'],
         datasets: [{
             data: [
-                incomeAmount.value,
                 needsHousing.value,
                 needsUtilities.value,
                 needsFood.value,
