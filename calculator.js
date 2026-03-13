@@ -18,7 +18,7 @@ const retirementAmount = document.getElementById('retirement-amount');
 const collegeAmount = document.getElementById('college-amount');
 const emergencyAmount = document.getElementById('emergency-amount');
 
-const incomeAmount = document.getElementById('income-amount');
+const incomeAmount = document.getElementById('salary');
 
 const incomeFrequency = document.getElementById('income-frequency');
 
@@ -27,68 +27,73 @@ const addExpenseWants = document.getElementById('expenseButtonWants');
 const addExpenseSavings = document.getElementById('expenseButtonSavings');
 const addExpenseMisc = document.getElementById('expenseButtonMisc');
 
-// initalize gross income variable
-let grossIncome = 0;
 
 // Function to calculate federal tax based on taxable income
-function calculateFederalTax() { // FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX
-    let taxableIncome = incomeAmount;
+function calculateFederalTax(incomeAmount) { // FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX
     let tax = 0;
-
-    if (taxableIncome <= 12400) {
-        tax = taxableIncome * 0.10;
+    if (incomeAmount <= 12400) {
+        tax = incomeAmount * 0.10;
     }
-    else if (taxableIncome <= 50400) {
+    else if (incomeAmount <= 50400) {
         tax = (12400 * 0.10) +
-            ((taxableIncome - 12400) * 0.12);
+            ((incomeAmount - 12400) * 0.12);
     }
     else {
         tax = (12400 * 0.10) +
             ((50400 - 12400) * 0.12) +
-            ((taxableIncome - 50400) * 0.22);
+            ((incomeAmount - 50400) * 0.22);
     }
-
     return tax;
 }
 
-async function getData() { // FIX FIX FIX
-    const url = "https://eecu-data-server.vercel.app/data";
+
+
+// API
+const salary = document.getElementById('salary');
+
+async function careerSelector() {
+    const careerSelect = document.getElementById('career-select');
+    const careerSalaryMap = new Map();
 
     try {
-        const response = await fetch(url);
-
+        const response = await fetch('https://eecu-data-server.vercel.app/data');
         if (!response.ok) {
-
-          throw new Error(`Response status: ${response.status}`);
+            throw new Error('Network response was not okay');
         }
-    
-        const result = await response.json();
-        console.log(result);
 
+        const users = await response.json();
 
+        users.forEach(user => {
+            careerSalaryMap.set(user["Occupation"], user["Salary"]);
+            const option = new Option(user["Occupation"], user["Occupation"]);
+            careerSelect.add(option);
+        });
 
-      } catch (error) {
+        careerSelect.addEventListener('change', () => {
+            salary.textContent = careerSalaryMap.get(careerSelect.value) || '';
+        })
+
+    } catch (error) {
         console.error(error.message);
-      }
-    
+    }
 }
 
+careerSelector();
+
 // LOCAL STORAGE LOCAL STORAGE LOCAL STORAGE
+
+
 
 // Function to calculate the budget based on user input (ran every time an input changes)
 function calculateBudget() {
 
-    if (incomeFrequency.value === 'monthly') {
-        document.getElementById('summmary-gross-monthly-income').textContent = `$${incomeAmount.value}`;
-        document.getElementById('summary-gross-annual-income').textContent = `$${(incomeAmount.value * 12)}`;
-    } else if (incomeFrequency.value === 'annually') {
-        document.getElementById('summmary-gross-monthly-income').textContent = `$${(incomeAmount.value / 12).toFixed(2)}`;
-        document.getElementById('summary-gross-annual-income').textContent = `$${incomeAmount.value}`;
-    } else if (incomeFrequency.value === 'biweekly') {
-        document.getElementById('summmary-gross-monthly-income').textContent = `$${((incomeAmount.value * 26) / 12).toFixed(2)}`;
-        document.getElementById('summary-gross-annual-income').textContent = `$${incomeAmount.value * 26}`;
-    }
+    const incomeAmount = document.getElementById('salary');
 
+    document.getElementById('summmary-gross-monthly-income').textContent = `$${incomeAmount.value}`;
+    document.getElementById('summary-gross-annual-income').textContent = `$${(incomeAmount.value * 12)}`;
+
+    document.getElementById('summmary-gross-monthly-income').textContent = `$${(incomeAmount.value / 12).toFixed(2)}`;
+    document.getElementById('summary-gross-annual-income').textContent = `$${incomeAmount.value}`;
 
     let needsTotal = Number(needsHousing.value) + Number(needsUtilities.value) + Number(needsFood.value) + Number(healthcare.value) + Number(loans.value);
     let wantsTotal = Number(wantsEntertainment.value) + Number(wantsHobbies.value) + Number(wantsClothing.value) + Number(wantsEatingOut.value) + Number(wantsTravel.value);
@@ -135,58 +140,58 @@ function calculateBudget() {
     //Render the chart
     const ctx = document.getElementById('budgetChart');
     // Destroy the existing chart instance if it exists to prevent multiple charts from overlapping
-   // Ensure window.budgetChart is a valid Chart.js instance before destroying it
-if (window.budgetChart && typeof window.budgetChart.destroy === 'function') {
-    window.budgetChart.destroy();
-}
-
-
-function getCustomValues(className) {
-    const inputs = document.querySelectorAll(`.${className}`); // Select all inputs with the given class
-    return Array.from(inputs).map(input => Number(input.value) || 0); // Convert values to numbers
-}
-
-// Collect values for custom wants, needs, and amounts
-const customWantsValues = getCustomValues('custom-wants'); // Replace 'custom-wants' with the actual class name
-const customNeedsValues = getCustomValues('custom-needs'); // Replace 'custom-needs' with the actual class name
-const customAmountsValues = getCustomValues('custom-amounts'); // Replace 'custom-amounts' with the actual class name
-
-// Combine all values into the chart dataset
-const allValues = [
-    ...customWantsValues,
-    ...customNeedsValues,
-    ...customAmountsValues
-];
-
-const expenseName = document.getElementById('custom-amount');
-
-// Create a new Chart.js instance
-window.budgetChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        labels: ['Housing', 'Utilities', 'Food', 'Healthcare', 'Loans', 'Entertainment', 'Hobbies',
-                'Clothing', 'Eating Out', 'Travel', '401k', 'College', 'Emergecy Fund'],
-        datasets: [{
-            data: [
-                needsHousing.value,
-                needsUtilities.value,
-                needsFood.value,
-                healthcare.value,
-                loans.value,
-                wantsEntertainment.value,
-                wantsHobbies.value,
-                wantsClothing.value,
-                wantsEatingOut.value,
-                wantsTravel.value,
-                retirementAmount.value,
-                collegeAmount.value,
-                emergencyAmount.value,
-                allValues
-            ],
-            borderWidth: 1
-        }]
+    // Ensure window.budgetChart is a valid Chart.js instance before destroying it
+    if (window.budgetChart && typeof window.budgetChart.destroy === 'function') {
+        window.budgetChart.destroy();
     }
-});
+
+
+    function getCustomValues(className) {
+        const inputs = document.querySelectorAll(`.${className}`); // Select all inputs with the given class
+        return Array.from(inputs).map(input => Number(input.value) || 0); // Convert values to numbers
+    }
+
+    // Collect values for custom wants, needs, and amounts
+    const customWantsValues = getCustomValues('custom-wants'); // Replace 'custom-wants' with the actual class name
+    const customNeedsValues = getCustomValues('custom-needs'); // Replace 'custom-needs' with the actual class name
+    const customAmountsValues = getCustomValues('custom-amounts'); // Replace 'custom-amounts' with the actual class name
+
+    // Combine all values into the chart dataset
+    const allValues = [
+        ...customWantsValues,
+        ...customNeedsValues,
+        ...customAmountsValues
+    ];
+
+    const expenseName = document.getElementById('custom-amount');
+
+    // Create a new Chart.js instance
+    window.budgetChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Housing', 'Utilities', 'Food', 'Healthcare', 'Loans', 'Entertainment', 'Hobbies',
+                'Clothing', 'Eating Out', 'Travel', '401k', 'College', 'Emergecy Fund'],
+            datasets: [{
+                data: [
+                    needsHousing.value,
+                    needsUtilities.value,
+                    needsFood.value,
+                    healthcare.value,
+                    loans.value,
+                    wantsEntertainment.value,
+                    wantsHobbies.value,
+                    wantsClothing.value,
+                    wantsEatingOut.value,
+                    wantsTravel.value,
+                    retirementAmount.value,
+                    collegeAmount.value,
+                    emergencyAmount.value,
+                    allValues
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
 }
 
 function changeInputToP() {
@@ -204,7 +209,7 @@ function changeInputToP() {
 addExpenseNeeds.addEventListener('click', () => {
     const newInput = document.createElement('article');
     newInput.innerHTML =
-    `<article class="custom-expense-section">
+        `<article class="custom-expense-section">
            <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
         <article class="input-fields">
             <label for="housing-amount">$</label>
@@ -225,7 +230,7 @@ addExpenseNeeds.addEventListener('click', () => {
 addExpenseWants.addEventListener('click', () => {
     const newInput = document.createElement('article');
     newInput.innerHTML =
-    `<article class="custom-expense-section">
+        `<article class="custom-expense-section">
            <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
         <article class="input-fields">
             <label for="housing-amount">$</label>
@@ -248,7 +253,7 @@ addExpenseWants.addEventListener('click', () => {
 addExpenseSavings.addEventListener('click', () => {
     const newInput = document.createElement('article');
     newInput.innerHTML =
-    `<article class="custom-expense-section">
+        `<article class="custom-expense-section">
            <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
         <article class="input-fields">
             <label for="housing-amount">$</label>
@@ -271,7 +276,7 @@ addExpenseSavings.addEventListener('click', () => {
 addExpenseMisc.addEventListener('click', () => {
     const newInput = document.createElement('article');
     newInput.innerHTML =
-    `<article class="custom-expense-section">
+        `<article class="custom-expense-section">
            <input type="text" placeholder="Expense Name" id="custom-expense" onchange="changeInputToP()">
         <article class="input-fields">
             <label for="housing-amount">$</label>

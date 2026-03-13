@@ -38,7 +38,7 @@ nav h1 {
     width: 710px;
     height: 868px;
     & .income {
-        width: 507px;
+        width: fit-content;
         height: 37px;
         grid-area: income;
         display: flex;
@@ -46,6 +46,8 @@ nav h1 {
         background-color: #B0FFD3;
         padding: 10px;
         border-radius: 10px;
+        justify-content: center;
+        margin-bottom: -60px;
         & h2 {
             color: #36454F;
             display: flex;
@@ -101,17 +103,21 @@ nav h1 {
 }
 
 .income-details select {
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
-.income-details input {
-    margin-left: 3px;
-    padding: 5px;
-    width: 150px;
-    height: 30px;
-    display: flex;
+.income-details label {
     align-self: center;
+    background-color: white;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 10px;
+    border: solid 1px rgb(163, 163, 163);
+    text-align: left;
+    float: right;
 }
+
+
 
 .income-details p {
     display: flex;

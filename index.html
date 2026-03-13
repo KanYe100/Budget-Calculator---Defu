@@ -11,24 +11,17 @@
 <body>
     <nav>
         <h1>Budget Calculator</h1>
+        
     </nav>
     <main>
         <section class="left-side">
             <section class="income">
                 <select name="career" id="career-select" onchange="calculateBudget()">
-                    <option value="career">Select a career</option>
+                    <option disabled selected hidden>Select your job</option>
                 </select>
                 
-                <section class="income-details">
-                    <p>$</p>
-                    <input type="number" class="income-amount" name="income-amount" id="income-amount" value=""
-                        onchange="calculateBudget()">
-                    <p>/</p>
-                    <select name="income-frequency" id="income-frequency" onchange="calculateBudget()">
-                        <option value="monthly">Monthly</option>
-                        <option value="annually">Annually</option>
-                        <option value="biweekly">Bi-Weekly</option>
-                    </select>
+                <section class="income-details">                    
+                    <label id="salaryContainer">$<span id="salary"></span></label>
                 </section>
             </section>
             <section class="needs">
@@ -180,8 +173,7 @@
             <section class="graph">
                 <canvas id="budgetChart"></canvas>
             </section>
-            <p class="label-remaining"><span id="span-remaining">Remaining:</span> <span
-                id="spending-remaining">$0.00</span></p>
+            <p class="label-remaining"><span id="span-remaining">Remaining:</span> <span id="spending-remaining">$0.00</span></p>
             <section class="summary">
                 <section class="summary-left">
                     <p class="label-month"><span id="span-monthly">Gross Monthly Income</span><br><span
