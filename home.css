@@ -57,6 +57,7 @@ nav h1 {
     & .needs {
         grid-area: needs;
         width: 318px;
+
     }
     & .wants {
         grid-area: wants;
