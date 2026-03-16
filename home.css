@@ -279,14 +279,14 @@ button {
 
 #spending-remaining-summary {
     margin-top: -10px;
-    color: #6BFFAE;
+    color: #2ecc71;
     text-decoration: none;
     font-weight: bold;
 }
 
-#spending-remaining-chart {
+#spending-remaining-chart { /* #6BFFAE */
     margin-top: -10px;
-    color: #6BFFAE;
+    color: #2ecc71;
     text-decoration: none;
     font-weight: bold;
 }
@@ -326,20 +326,57 @@ button {
 }
 
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
+
+
+
     nav h1 {
         text-align: center;
-        width: 100%;
+        width: 600px;
     }
+
 
     main {
         display: flex;
         flex-direction: column;
-        gap: 30px;
-        align-content: center;
+        justify-content: space-between;
+    }
+
+    .left-side {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
+        width: fit-content;
+        align-self: center;
+    }
+
+    .right-side {
+        margin-top: 20px;
     }
 
     .needs {
-        margin-top: 0px;
+        margin-top: 60px;
+    }
+
+    .label-remaining {
+        margin-top: 20px;
+    }
+
+    .summary {
+        display: flex;
+        flex-direction: column-reverse;
+        margin-bottom: 100px;
+    }
+
+    .summary-left {
+        height: 200px;
+        display: flex;
+    }
+
+    .summary-right {
+        align-items: center;
+        margin-right: 57px;
+        margin-bottom: 50px;
     }
 }

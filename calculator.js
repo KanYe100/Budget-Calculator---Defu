@@ -69,11 +69,8 @@ async function careerSelector() {
         });
 
         careerSelect.addEventListener('change', () => {
-
             salary.textContent = careerSalaryMap.get(careerSelect.value) || 0;
-
             calculateBudget();
-
         });
     }
     catch (error) {
